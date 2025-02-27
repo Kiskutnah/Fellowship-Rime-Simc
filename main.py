@@ -44,7 +44,7 @@ def main():
     #debug_sim(character)
 
 
-def stat_weights(character):
+def stat_weights(character: Character) -> None:
     print("==== Doing Stat Weights ==== ")
     statIncrease = 200
     target_count = 4
@@ -80,11 +80,11 @@ def stat_weights(character):
     print(f'Spirit: {1 + ((spiritDPS - baseDPS) / baseDPS):.2f}')
     print("--------------")
 
-def debug_sim(character):
+def debug_sim(character: Character):
     sim = Simulation(character, duration=120, doDebug = True)
     sim.run()
 
-def average_dps(character, enemy_count):
+def average_dps(character: Character, enemy_count: int):
     runCount = 2000
     dpsRunningTotal = 0
     dpsLowest = 1000000
