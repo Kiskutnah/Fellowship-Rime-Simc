@@ -1,6 +1,22 @@
-import random
+from Character import Character
+
 class Spell:
-    def __init__(self, name = "", cast_time = 0, cooldown = 0, mana_generation = 0, winter_orb_cost = 0, damage_percent = 0, hits=1, channeled = False, ticks = 0, isDebuff = False, debuffDuration = 0, doDebuffDamage = False, isBuff = False, min_target_count = 1, max_target_count = 1000):
+    def __init__(self, 
+                 name: str = "", 
+                 cast_time: float = 0, 
+                 cooldown: int = 0, 
+                 mana_generation: int = 0, 
+                 winter_orb_cost: int = 0,
+                 damage_percent: int = 0,
+                 hits: int=1,
+                 channeled: bool = False,
+                 ticks: int = 0,
+                 isDebuff: bool = False,
+                 debuffDuration: int = 0, 
+                 doDebuffDamage: bool = False, 
+                 isBuff: bool = False, 
+                 min_target_count: int = 1, 
+                 max_target_count: int = 1000):
         self.name = name
         self.base_cast_time = cast_time
         self.cooldown = cooldown
@@ -21,17 +37,19 @@ class Spell:
         self.min_target_count = min_target_count #Minimum Needed Targets to cast this on.
         self.max_target_count = max_target_count #Maximum Needed Targets to cast this on.
 
-    def effective_cast_time(self, character):
-        return self.base_cast_time * (1 - character.haste / 100)
+    def effective_cast_time(self, character: Character) -> float:
+        c = self.base_cast_time * (1 - character.haste / 100)
+        return c
+    
 
-    def is_ready(self, character, enemy_count):
+    def is_ready(self, character: Character, enemy_count: int):
         if enemy_count >= self.min_target_count and enemy_count <= self.max_target_count:
             if self.winter_orb_cost <= character.winter_orbs:
                 if self.remaining_cooldown <= 0:
                     return True
         return False
     
-    def damage(self, character):
+    def damage(self, character: Character):
         base_damage = self.damage_percent * character.intellect
         modified_damage = base_damage * (1 + character.expertise / 100)
         return modified_damage
